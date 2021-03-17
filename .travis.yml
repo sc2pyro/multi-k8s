@@ -14,7 +14,11 @@ after_success:
   - docker build -t jkjar/multi-nginx ./nginx
   - docker build -t jkjar/multi-server ./server
   - docker build -t jkjar/multi-worker ./worker
+
+  # Docker login
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  # Push to DockerHub
   - docker push jkjar/multi-client
   - docker push jkjar/multi-nginx
   - docker push jkjar/multi-server
