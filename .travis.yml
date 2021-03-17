@@ -1,0 +1,21 @@
+language: generic
+
+services:
+  - docker
+
+before_install:
+  - docker build -t jkjar/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true jkjar/react-test npm test
+
+after_success:
+  - docker build -t jkjar/multi-client ./client
+  - docker build -t jkjar/multi-nginx ./nginx
+  - docker build -t jkjar/multi-server ./server
+  - docker build -t jkjar/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push jkjar/multi-client
+  - docker push jkjar/multi-nginx
+  - docker push jkjar/multi-server
+  - docker push jkjar/multi-worker
