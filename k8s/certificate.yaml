@@ -11,10 +11,3 @@ spec:
   dnsNames:
     - thekjar.com
     - www.thekjar.com
-  acme:
-    config:
-      - http01:
-        ingressClass: nginx
-        domains:
-          - thekjar.com
-          - www.thekjar.com
